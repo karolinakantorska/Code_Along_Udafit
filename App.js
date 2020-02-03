@@ -5,13 +5,11 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import History from "./components/History";
-
+import Live from "./components/Live";
 import { purple, white } from "./utils/colors";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-
 import ScrollViewExample from "./components/RNComponents/ScrollViewExample/ScrollViewExample";
 import FormExample from "./components/RNComponents/FormExample/FormExample";
-
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import {
@@ -29,12 +27,10 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
     </View>
   );
 }
-
 const _TabNavigator =
   Platform.OS === "ios"
     ? createBottomTabNavigator
     : createMaterialTopTabNavigator;
-
 const TabNavigator = _TabNavigator(
   {
     History: {
@@ -53,6 +49,15 @@ const TabNavigator = _TabNavigator(
         tabBarLabel: "Add Entry",
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name="plus-square" size={30} color={tintColor} />
+        )
+      }
+    },
+    Live: {
+      screen: Live,
+      navigationOptions: {
+        tabBarLabel: "Live",
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-speedometer" size={30} color={tintColor} />
         )
       }
     }
@@ -77,7 +82,6 @@ const TabNavigator = _TabNavigator(
     }
   }
 );
-
 const MainNavigation = createStackNavigator({
   Home: {
     screen: TabNavigator,
@@ -95,12 +99,10 @@ const MainNavigation = createStackNavigator({
     })
   }
 });
-
 const Navigation = createAppContainer(MainNavigation);
 // This constant is used because when false I want to show some other examples
 //  shown on the course like "React Native Components" or "Native Features" that
 // aren't used on this appp
-
 const SHOW_UDACIFITNESS = true;
 function App() {
   if (SHOW_UDACIFITNESS) {
@@ -119,5 +121,4 @@ function App() {
     );
   }
 }
-
 export default App;
