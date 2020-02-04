@@ -19,6 +19,7 @@ import {
 
 import Constants from "expo-constants";
 import EntryDetail from "./components/EntryDetail";
+import { setLocalNotification } from './utils/helpers'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -104,21 +105,25 @@ const Navigation = createAppContainer(MainNavigation);
 //  shown on the course like "React Native Components" or "Native Features" that
 // aren't used on this appp
 const SHOW_UDACIFITNESS = true;
-function App() {
-  if (SHOW_UDACIFITNESS) {
-    return (
-      <Provider store={createStore(reducer)}>
-        <View style={{ flex: 1 }}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <Navigation />
-        </View>
-      </Provider>
-    );
-  } else {
-    return (
-      // <ScrollViewExample />
-      <FormExample />
-    );
+export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+  render() {
+    if (SHOW_UDACIFITNESS) {
+      return (
+        <Provider store={createStore(reducer)}>
+          <View style={{ flex: 1 }}>
+            <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+            <Navigation />
+          </View>
+        </Provider>
+      );
+    } else {
+      return (
+        // <ScrollViewExample />
+        <FormExample />
+      );
+    }
   }
 }
-export default App;
